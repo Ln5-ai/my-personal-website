@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Li N5的个人网站</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/main.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+        .avatar-container {
+            position: relative;
+            z-index: 10;
+            margin-top: -7.25rem; /* 从 -6rem 改为 -7.25rem，再上移了约 20px */
+        }
+        .intro-background {
+            background: linear-gradient(135deg, #e8ded4, #d8cec4);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .intro-background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.1) 75%, transparent 75%, transparent);
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+        .intro-background::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 80%);
+            transform: rotate(30deg);
+        }
+        .intro-background p {
+            position: relative;
+            z-index: 1;
+        }
+        .content-area {
+            background-color: #ffffff;
+            background-image: 
+                linear-gradient(#e8e8e8 1px, transparent 1px),
+                linear-gradient(90deg, #e8e8e8 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: -1px -1px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            position: relative;
+        }
+        .content-area::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+            z-index: 1;
+        }
+        .content-area > * {
+            position: relative;
+            z-index: 2;
+        }
+        nav ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem; /* 使用 gap 属性来统一设置间距 */
+        }
+        nav ul li {
+            margin-bottom: 0; /* 移除之前的 margin-bottom */
+        }
+        nav ul li a {
+            display: block;
+            padding: 0.75rem 1rem;
+            background-color: #d8cec4;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            border-left: 4px solid transparent;
+        }
+        nav ul li a:hover {
+            background-color: #e8ded4;
+            border-left: 4px solid #5a4d40;
+            padding-left: 1.25rem;
+        }
+        .content-area section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #b0a396; /* 更改分割线颜色，使其更深 */
+        }
+        .content-area section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        body, header, html {
+            background-color: #c4b6aa !important;
+        }
+        /* 适应新的背景色 */
+        body {
+            color: #333333;
+        }
+        /* 调整其他元素的背景色和文本颜色 */
+        .content-area, nav ul li a {
+            background-color: #d8cec4;
+            color: #333333;
+        }
+        /* 调整链接颜色 */
+        a {
+            color: #5a4d40;
+        }
+        a:hover {
+            color: #000000;
+        }
+        /* 整介绍背景 */
+        .intro-background {
+            background: linear-gradient(135deg, #d8cec4, #c4b6aa);
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            background-color: #e8ded4;
+            color: #5a4d40;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            display: inline-block;
+            margin: 0.25rem;
+        }
+        .progress-pie {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #a69887;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-pie::after {
+            content: attr(data-progress);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.8rem;
+            color: #5a4d40;
+            z-index: 2;
+        }
+        .waves {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: 100%;
+            left: -50%;
+            background: #f0e6db;
+            transition: top 0.5s ease;
+        }
+        .wave {
+            position: absolute;
+            top: -25%;
+            left: -25%;
+            width: 150%;
+            height: 150%;
+            background: #f0e6db;
+            border-radius: 40%;
+        }
+        .wave:nth-child(1) {
+            animation: wave 8s infinite linear;
+        }
+        .wave:nth-child(2) {
+            animation: wave 10s infinite linear;
+            opacity: 0.7;
+        }
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status-tag {
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            display: inline-block;
+        }
+        .recent-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #d8cec4; /* 保持这个颜色 */
+        }
+        .recent-item-content {
+            flex-grow: 1;
+            margin-left: 1rem;
+            min-width: 0; /* 添加这一行 */
+        }
+        .recent-item-content h3,
+        .recent-item-content p {
+            word-wrap: break-word; /* 添加这一行 */
+            overflow-wrap: break-word; /* 添加这一行 */
+        }
+        .description-text {
+            color: #000000; /* 纯黑色 */
+        }
+        #recent {
+            padding-bottom: 1rem; /* 减少整个部分的下边距 */
+        }
+        .recent-item:last-child {
+            margin-bottom: 0; /* 移除最后一个项目的下边距 */
+        }
+        .work-divider {
+            border-top-width: 1px;
+            width: 100%;
+            margin: 1.5rem 0;
+        }
+        .hidden {
+            display: none;
+        }
+        /* 更新左侧菜单样式 */
+        .side-menu {
+            background-color: #d1c7bd;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transform: translateX(-70px);
+        }
+        #sideNav {
+            position: static;
+            align-self: flex-start;
+            width: 256px; /* 恢复原始宽度，通常是 16rem 或 256px */
+        }
+        .side-menu ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .side-menu li {
+            margin-bottom: 0.375rem; /* 减少项目间距 */
+        }
+        .side-menu a {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            color: #5a4d40;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            font-size: 0.9rem;
+            white-space: nowrap; /* 防止文字换行 */
+        }
+        .side-menu a:hover, .side-menu a.active {
+            background-color: #c4b6aa; /* 更接近整体背景色 */
+            border-left-color: #5a4d40;
+        }
+        .side-menu a.active {
+            color: #4a90e2;
+        }
+        .side-menu a svg {
+            margin-right: 0.5rem; /* 给图标右侧添加间距 */
+            flex-shrink: 0; /* 防图标缩小 */
+        }
+        .sticky {
+            position: fixed;
+            top: 20px;
+            width: 240px; /* 设置固定宽度 */
+        }
+
+        /* 为了防止内容突然跳动，需要在原添加一个占位符 */
+        .sticky + .content-area {
+            padding-top: 60px; /* 调整这个值使其等于导航的高度 */
+        }
+
+        .flex-1 {
+            /* margin-left: 50px; 删除或注释掉这一行 */
+        }
+
+        .content-shift {
+            transform: translateX(20px);
+        }
+        .shift-left {
+            transform: translateX(-124px); /* 从 -114px 改为 -124px */
+        }
+        .shift-left-160 {
+            transform: translateX(-120px); /* 从 -140px 改为 -120px */
+        }
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .movie-card {
+            transition: all 0.3s ease;
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#c4b6aa] text-[#333333] flex flex-col">
+    <header class="relative w-full bg-[#e6e6e6] flex justify-center items-center py-8">
+        <img src="images/background.jpg" 
+             alt="Welcome to LN5' Page" 
+             class="max-w-4xl w-full object-contain">
+    </header>
+
+    <main class="flex-1 flex flex-col items-center">
+        <div class="avatar-container">
+            <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                <img src="images/avatar.jpg" alt="Li N5" class="w-full h-full object-cover">
+            </div>
+        </div>
+
+        <div class="max-w-2xl mx-auto text-center mt-4">
+            <h1 class="text-4xl font-bold mb-4">Li N5</h1>
+            <div class="tags">
+                <span class="tag">喜欢做产品🐶</span>
+                <span class="tag">正在学ai📑</span>
+                <span class="tag">爱家也爱户外⛺️</span>
+                <span class="tag">找工作💼</span>
+                <span class="tag">爱玩玩具😩</span>
+            </div>
+            <p class="text-xl italic mb-6">
+                我喜欢胡适先生说的"怕什么真理无穷，进一步有进一步的欢喜"
+            </p>
+            <div class="intro-background p-8 rounded-lg mb-8 relative">
+                <p class="text-xl relative z-10">
+                    欢迎你来到我的网页，感谢AI让能落地<br>
+                    设计由v0和ideogram完成，实现由Cursor完成
+                </p>
+            </div>
+        </div>
+
+        <div class="w-full max-w-6xl mx-auto px-1 flex">
+            <nav class="w-64 pr-1" id="sideNav">
+                <div class="side-menu">
+                    <ul>
+                        <li>
+                            <a href="#recent" class="active flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
+                                </svg>
+                                最近ing
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#work" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M6 6V5a3 3 0 013-3h2a3 3 0 013 3v1h2a2 2 0 012 2v3.57A22.952 22.952 0 0110 13a22.95 22.95 0 01-8-1.43V8a2 2 0 012-2h2zm2-1a1 1 0 011-1h2a1 1 0 011 1v1H8V5zm1 5a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                    <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
+                                </svg>
+                                工作经历
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#products" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                                </svg>
+                                喜欢的产品
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#movies" class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm3 2h6v4H7V5zm8 8v2h1v-2h-1zm-2-2H7v4h6v-4zm2 0h1V9h-1v2zm1-4V5h-1v2h1zM5 5v2H4V5h1zm0 4H4v2h1V9zm-1 4h1v2H4v-2z" clip-rule="evenodd" />
+                                </svg>
+                                喜欢的电影
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="flex-1 pl-1">
+                <div class="w-full max-w-3xl mx-auto shift-left-160">
+                    <!-- 最近ing 模块 -->
+                    <div class="content-area mb-8 bg-white rounded-lg shadow-md p-6">
+                        <section id="recent">
+                            <h2 class="text-2xl font-bold mb-6">最近ing</h2>
+                            
+                            <div class="recent-item flex justify-between items-start">
+                                <div class="flex items-stretch flex-grow">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 bg-[#5a4d40] text-white rounded-full text-xl font-bold mr-4 flex-shrink-0">1</span>
+                                    <div class="recent-item-content flex-grow">
+                                        <div class="flex items-center mb-2">
+                                            <h3 class="text-lg font-semibold mr-2">
+                                                学习AI并制作个人展示网页
+                                            </h3>
+                                            <span class="px-2 py-1 bg-[#e0f0e0] text-[#2e7d32] text-xs font-semibold rounded-full">心态：积极</span>
+                                        </div>
+                                        <p class="text-sm description-text">通过学习AI和相关软件，创建一个展示个人近况和喜好的网页</p>
+                                    </div>
+                                </div>
+                                <div class="progress-pie ml-4 flex-shrink-0" style="--progress: 60%" data-progress="60%">
+                                    <div class="waves">
+                                        <div class="wave"></div>
+                                        <div class="wave"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="recent-item flex justify-between items-start">
+                                <div class="flex items-stretch flex-grow">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 bg-[#5a4d40] text-white rounded-full text-xl font-bold mr-4 flex-shrink-0">2</span>
+                                    <div class="recent-item-content flex-grow">
+                                        <div class="flex items-center mb-2">
+                                            <h3 class="text-lg font-semibold mr-2">
+                                                尝试用Cursor去做一个小程序
+                                            </h3>
+                                            <span class="px-2 py-1 bg-[#fff2cc] text-[#856404] text-xs font-semibold rounded-full">心态：一般</span>
+                                        </div>
+                                        <p class="text-sm description-text">看Cursor实战视频，研究上线项目，研究使用git，研究其他会使用到的ai工具</p>
+                                    </div>
+                                </div>
+                                <div class="progress-pie ml-4 flex-shrink-0" style="--progress: 10%" data-progress="10%">
+                                    <div class="waves">
+                                        <div class="wave"></div>
+                                        <div class="wave"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="recent-item flex justify-between items-start">
+                                <div class="flex items-stretch flex-grow">
+                                    <span class="inline-flex items-center justify-center w-10 h-10 bg-[#5a4d40] text-white rounded-full text-xl font-bold mr-4 flex-shrink-0">3</span>
+                                    <div class="recent-item-content flex-grow">
+                                        <div class="flex items-center mb-2">
+                                            <h3 class="text-lg font-semibold mr-2">
+                                                找工作，看机会
+                                            </h3>
+                                            <span class="px-2 py-1 bg-[#ffe6e6] text-[#d9534f] text-xs font-semibold rounded-full">心态：消极</span>
+                                        </div>
+                                        <p class="text-sm description-text">不断优化简历，准备面试沟通内容。</p>
+                                    </div>
+                                </div>
+                                <div class="progress-pie ml-4 flex-shrink-0" style="--progress: 50%" data-progress="50%">
+                                    <div class="waves">
+                                        <div class="wave"></div>
+                                        <div class="wave"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- 工作经历模块 -->
+                    <div class="content-area mb-8 bg-white rounded-lg shadow-md p-6">
+                        <section id="work">
+                            <h2 class="text-2xl font-bold mb-4">工作经历</h2>
+                            <h3 class="text-xl font-semibold mb-3 text-[#4a90e2]">个人优势</h3>
+                            <ul class="list-disc pl-5 space-y-2 mb-6">
+                                <li>品中中六边形战士，能做产品、能做运营（平台、用户、商户）、能做设计</li>
+                                <li>4年 产品团队管理经验；8年垂类TOP级别产品的产品经理实操经验，熟识产品0-1及1-100全流程；</li>
+                                <li>2年 B+轮互联网公司核心业务总监经验，为核心指标负责</li>
+                                <li>6年 家居家装行业经验，对国人装修和居住需求有深刻了解，熟悉装修流程和行业上下游关系</li>
+                                <li>长期主义，价值感</li>
+                            </ul>
+                            
+                            <h3 class="text-xl font-semibold mb-3 text-[#4a90e2]">工作详情（近-远）</h3>
+                            <div id="job1" class="mb-6">
+                                <div class="flex justify-between items-center">
+                                    <h4 class="text-lg font-semibold">家宅融智（京）科技有限司 | 业务负责人</h4>
+                                    <p class="text-sm text-gray-600">2023.01 - 2024.07 (1年6个月)</p>
+                                </div>
+                                <p class="mt-2">内容：离好好住半年后，以设计师业务负责人身份重新加入公司</p>
+                                <p class="font-semibold mt-4">【主要职责】</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>负责好好住APP整体定位调整，设计师业务线全盘规划，保障收目标础上兼顾长期价值</li>
+                                    <li>管理产品经理团队，负责设计师业务产品划和落地</li>
+                                    <li>管理平台运营（C端）和商营（B端），齐团队优化配合方式</li>
+                                    <li>为销售团队制定新拓入目并制定KA产品，提升收入天花板</li>
+                                    <li>管理数据分析团，制定核心数据看，补充数据导向的优化产品方法</li>
+                                </ul>
+                                <p class="font-semibold mt-4">【业绩】</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li>完全年业务线整入目标120%，并完收入模的升级</li>
+                                    <li>完成APP定位重新整，包含核心模块及调整功能优化（从家居社区调整为找服务平台，并效提升核心数据指标（咨询渗透率相对提升80%，咨询转化率相对提升20%，人均咨询数提升50%）</li>
+                                    <li>在团队规模大量缩减的背景下，收敛核心目标，提高团队配合效率，提高人效</li>
+                                </ul>
+                            </div>
+
+                            <div class="text-center">
+                                <button id="showMoreWork1" class="show-more-btn mt-4 px-4 py-2 bg-[#5a4d40] text-white rounded hover:bg-[#4a3d30] transition-colors">
+                                    查看更多
+                                </button>
+                            </div>
+
+                            <div id="moreWorkExperience1" class="hidden">
+                                <hr class="border-t border-[#d8cec4] work-divider">
+                                <div id="job2" class="mb-6">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-lg font-semibold">家宅融智（北京）科技有限公司 | 移动产品经理</h4>
+                                        <p class="text-sm text-gray-600">2018.01 - 2022.06 (4年5个月)</p>
+                                    </div>
+                                    <p class="mt-2">4年内完成从产品经理，到产品线负责人，到产品线产品+运营负责人的晋升</p>
+                                    <p class="font-semibold mt-4">【主要项目&职责】</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>2018.1-2019.4 线上商城
+                                            <p class="mt-2">负责线上B2C商城0-1的产品规划及落地，包不限于APP前台页面、商家管理后台、部运营后台等，以GMV为最终目标，月均GMV在1000w+</p>
+                                        </li>
+                                        <li>2019.6-2020.3. 社区产品及装修工具
+                                            <p class="mt-2">负责社区功能规划：从不同装修阶段用户痛点出发，规划装工具矩阵，以提升用户留存和提高社区活跃为核心目标</p>
+                                        </li>
+                                        <li>2020.3-2022.6 装修服务业务
+                                            <p class="mt-2">负责好好住核心业务"设计师业务"产品规划，带领产品团队和C端运营团队，以提升有效咨询数量和咨询比例为核心目标</p>
+                                        </li>
+                                    </ul>
+                                    <p class="font-semibold mt-4">【业绩】</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>【装修服务业务】
+                                            <p class="mt-2">设计师业务收入模式为收取B端年费，需要为商业用户提供足够的C端用户咨询数。核心工作围绕提升设计师咨询数和咨询占比展开。围绕核心目标拆解变量，再围核心变量，做运营动作和对应产品功能。（通过心智教育传递服务价值，提升此类用户量级；引导目标用户进入高效的咨询转化渠道和转化器中；提升转化器转化效率）</p>
+                                            <p class="mt-2">咨询有率达80%以上，咨询不达标占比35%以下；一年续费率50%以上，二年续费率80%以上，KA客户目标完成率过100%，占收入比重50%；21年启动装修公司业务后，业务收入增长30%</p>
+                                        </li>
+                                        <li>【社区产品及装修工具】
+                                            <p class="mt-2">配合运营目标，搭建社区功能，提升不同阶段及装修状态用户核心据（不限于发帖情况、内容交互数内容质量等），持续发布内容用户比例相对提升15%以上；内容被交互比例提升20%以上；</p>
+                                            <p class="mt-2">规划设计装前、装中的装修工具，在用户不同阶段提供刚需品工具，达到提升用户活跃及留存的目的，使用工具用户周活跃比未使用高30%，周留存、次周留存都高于未使用户30%同时工具产品还成为拉新的主力价值点，成为用户增长有效手段。（靠工具日新增用户达1000+）</p>
+                                        </li>
+                                        <li>【线上商城】
+                                            <p class="mt-2">为公司增加新的收入曲线，期需要快速上线并吸纳国内大量家居优质品牌入驻，长以交易数量、客单价、笔单价及GMV为最终目标，上线6个月内，月均GMV达500w+，大促期间单日GMV过300w万，300+国内优质商家入驻，60%商家月收入超过淘宝店铺</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="text-center">
+                                    <button id="showMoreWork2" class="show-more-btn mt-4 px-4 py-2 bg-[#5a4d40] text-white rounded hover:bg-[#4a3d30] transition-colors">
+                                        查看更多
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="moreWorkExperience2" class="hidden">
+                                <hr class="border-t border-[#d8cec4] work-divider">
+                                <div id="job3" class="mb-6">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-lg font-semibold">苏宁云商北京研发中心 | 产品经理</h4>
+                                        <p class="text-sm text-gray-600">2015.06 - 2017.08 (2年2个月)</p>
+                                    </div>
+                                    <p class="mt-2">- 做创新目，留存和GMV负责</p>
+                                    <p class="font-semibold mt-4">【主要职责】</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>负责社区创新产品，不断寻找用户在电商平台中的社交属性，为电商产品增加更多使用场景，提升产品留存和打开次数</li>
+                                        <li>负责二手交易产品，包括C2C全品类业务和C2B2C数码产品回收业务，提升二手品交易GMV</li>
+                                        <li>带团队接项目</li>
+                                        <li>带领产研团队打造社区产品，打造一个能完成产品规划-上线的独立团队</li>
+                                    </ul>
+                                    <p class="font-semibold mt-4">【业绩】</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>【圈圈社区】
+                                            <p class="mt-2">以提升用留存为目标通过帮用户做购买决策，降低选难度为核心，用话题来吸引用户参与论并持续关，最终用测评内容来给出结论，附带采买建议，形成内容生产-购买建议-种草-促销购买的闭环。涉及图文发布器、内容交互、投票、测评报名、测评发布、优惠券以及对应后台功能。</p>
+                                            <p class="mt-2">mvp版本上后小范内部推广产品交互用户占比高达8%，功模块ctr为5%，功能次日留存达10%左右，远超预期后被放在苏宁易购app tab3位置，每日发数500+，商品购买转化达3%，社区活跃用户留存远高于非社区用户，当年选入2015年第四季度易购优秀项目</p>
+                                        </li>
+                                        <li>【二手优品】
+                                            <p class="mt-2">0-1的二手C2C交易项目，为用户提供一个方便的二手易平台，期间重新梳理了全新的交易流程，实现了二手交易全流。主要涉及商品发布器、一键发布、消息中心、个人中心、下单、支付、逆向交易等。</p>
+                                            <p class="mt-2">2016年调整，二手业务重点转为布局C2B2C回收业务，模式是线上回收数码产品，估价线下网点人员上门检测回收，并发放新机优惠券；同时售卖回收后设备。</p>
+                                            <p class="mt-2">C2C业务，累计使用用户超过100w日活超2w，交易类用户占20%，有发布用户次周留存高达30%，年GMV破千万</p>
+                                            <p class="mt-2">C2B2C业务，累计回收月GMV过1000w，回收商品月销售GMV达2000w以上，回收券使用率过60%</p>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <hr class="border-t border-[#d8cec4] work-divider">
+                                <div id="job4" class="mb-6">
+                                    <div class="flex justify-between items-center">
+                                        <h4 class="text-lg font-semibold">诺克萨斯科技有限公司（原点手机） | 安卓产品经理</h4>
+                                        <p class="text-sm text-gray-600">2013.08 - 2015.05 (1年9个月)</p>
+                                    </div>
+                                    <p class="font-semibold mt-4">主要职责:</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>负责产品需求调研、需求收集、案设、产品宣讲</li>
+                                        <li>涉及第三方产品对接工作时的部沟通</li>
+                                    </ul>
+                                    <p class="font-semibold mt-4">工作内容:</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>主负责面产品的基础操作使用交互</li>
+                                        <li>独责"阅读产品""音乐产品""应用商店产品"的设计</li>
+                                    </ul>
+                                    <p class="font-semibold mt-4">业绩:</p>
+                                    <ul class="list-disc pl-5 space-y-2">
+                                        <li>公版ROM安装量破10W</li>
+                                        <li>手机出货超过100w台，用户活跃超过100w</li>
+                                    </ul>
+                                    <!-- 在最后添加以下内容 -->
+                                    <p class="text-center italic text-gray-400 mt-6">感谢你浏览到这里</p>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- 喜欢的产品模块 -->
+                    <div class="content-area mb-8 bg-white rounded-lg shadow-md p-6">
+                        <section id="products">
+                            <h2 class="text-2xl font-bold mb-6">喜欢的产品</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- 产品1 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://apps.apple.com/cn/app/flomo%E6%B5%AE%E5%A2%A8%E7%AC%94%E8%AE%B0-%E5%A4%87%E5%BF%98-%E4%BE%BF%E7%AD%BE-%E6%97%A5%E8%AE%B0/id1552314395" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/flomo.jpg" alt="Flomo" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">效率</span>
+                                            <h3 class="text-lg font-semibold mt-2">Flomo</h3>
+                                            <p class="text-sm text-gray-600 mt-2">持续不断记录，意义自然浮现</p>
+                                            <p class="text-sm mt-2">你可以非常方便地去记录每个灵感，他可以将你的灵感聚类，并定期浮现在你眼前，笔记的意义在于翻看。</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <!-- 产品2 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://www.xiaoyuzhoufm.com/" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/xiaoyuzhou.jpg" alt="小宇宙" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">音乐</span>
+                                            <h3 class="text-lg font-semibold mt-2">小宇宙</h3>
+                                            <p class="text-sm text-gray-600 mt-2">有审美有质量的播客</p>
+                                            <p class="text-sm mt-2">填充好那些你不方便盯着手机看的时间，听大家交流带给你更多思考。</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <!-- 产品3 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://web.okjike.com/login" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/jike.jpg" alt="即刻" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">社交</span>
+                                            <h3 class="text-lg font-semibold mt-2">即刻</h3>
+                                            <p class="text-sm text-gray-600 mt-2">从兴趣点出发，在社区找到同类</p>
+                                            <p class="text-sm mt-2">有审美，有质量的社区，最早可以订阅很多细小的兴趣点，并持续关注。</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <!-- 产品4 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://apps.apple.com/cn/app/%E6%9C%80%E5%90%8E%E4%B8%80%E5%8D%B7%E8%83%B6%E7%89%87/id1445858252" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/zuihouyijuanjiaojuan.jpg" alt="最后一卷胶卷" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">摄影</span>
+                                            <h3 class="text-lg font-semibold mt-2">最后一卷胶卷</h3>
+                                            <p class="text-sm text-gray-600 mt-2">致敬停产胶片</p>
+                                            <p class="text-sm mt-2">长期霸占我的滤镜，胶片感，色彩感，质感，都很好。</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <!-- 产品5 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://apps.apple.com/cn/app/notion-%E7%AC%94%E8%AE%B0-%E4%BB%BB%E5%8A%A1-ai/id1232780281" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/notion.jpg" alt="Notion" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">工具</span>
+                                            <h3 class="text-lg font-semibold mt-2">Notion</h3>
+                                            <p class="text-sm text-gray-600 mt-2">全能型的组织工具</p>
+                                            <p class="text-sm mt-2">用来做笔记、管理项目、创建数据库等，自定义超级强大</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                                <!-- 产品6 -->
+                                <div class="bg-white rounded-lg shadow-md overflow-hidden product-card">
+                                    <a href="https://www.haohaozhu.cn/" target="_blank" rel="noopener noreferrer" class="block hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                        <img src="images/haohaozhu.jpg" alt="好好住" class="w-full h-48 object-cover">
+                                        <div class="p-4">
+                                            <span class="text-sm text-gray-500">家居</span>
+                                            <h3 class="text-lg font-semibold mt-2">好好住</h3>
+                                            <p class="text-sm text-gray-600 mt-2">自己花精力做了6年</p>
+                                            <p class="text-sm mt-2">家居装修社区，可以看装修案例，也可以分享自己的装修经验</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- 喜欢的电影模块 -->
+                    <div class="content-area mb-8 bg-white rounded-lg shadow-md p-6">
+                        <section id="movies">
+                            <h2 class="text-2xl font-bold mb-6">喜欢的电影</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                                <!-- 肖申克的救赎 -->
+                                <a href="https://movie.douban.com/subject/1292052/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/shawshank.jpg" alt="肖申克的救赎" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.7
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">肖申克的救赎</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 弗兰克·德拉邦特</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 蒂姆·罗宾斯 / 摩根·弗里曼</p>
+                                    </div>
+                                </a>
+
+                                <!-- 少年派的奇幻漂流 -->
+                                <a href="https://movie.douban.com/subject/1929463/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/lifeofpi.jpg" alt="少年派的奇幻漂流" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.1
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">少年派的奇幻漂流</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 李安</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 苏拉·沙玛 / 伊尔凡·可汗</p>
+                                    </div>
+                                </a>
+
+                                <!-- 寻梦环游记 -->
+                                <a href="https://movie.douban.com/subject/20495023/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/coco.jpg" alt="寻梦环游记" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.1
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">寻梦环游记</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 李·昂克里奇 / 阿德里安·莫利纳</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 安东尼·冈萨雷斯 / 盖尔·加西亚·贝纳尔</p>
+                                    </div>
+                                </a>
+
+                                <!-- 海边的曼彻斯特 -->
+                                <a href="https://movie.douban.com/subject/25980443/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/manchester.jpg" alt="海边的曼彻斯特" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            8.6
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">海边的曼彻斯特</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 肯尼思·洛纳根</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 卡西·阿弗莱克 / 卢卡斯·赫奇</p>
+                                    </div>
+                                </a>
+
+                                <!-- 白日梦想家 -->
+                                <a href="https://movie.douban.com/subject/2133323/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/secretlife.jpg" alt="白日梦想家" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            8.5
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">白日梦想家</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 本·斯蒂勒</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 本·斯蒂勒 / 克里斯汀·韦格</p>
+                                    </div>
+                                </a>
+
+                                <!-- 茶馆 -->
+                                <a href="https://movie.douban.com/subject/1461403/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/teahouse.jpg" alt="茶馆" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.5
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">茶馆</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 谢添</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 于是之 / 郑榕</p>
+                                    </div>
+                                </a>
+
+                                <!-- 活着 -->
+                                <a href="https://movie.douban.com/subject/1292365/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/tolife.jpg" alt="活着" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.3
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">活着</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 张艺谋</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 葛优 / 巩俐</p>
+                                    </div>
+                                </a>
+
+                                <!-- 鬼子来了 -->
+                                <a href="https://movie.douban.com/subject/1291858/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/devilscoming.jpg" alt="鬼子来了" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.3
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">鬼子来了</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 姜文</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 姜文 / 香川照之</p>
+                                    </div>
+                                </a>
+
+                                <!-- 盗梦空间 -->
+                                <a href="https://movie.douban.com/subject/3541415/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/inception.jpg" alt="盗梦空间" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.3
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">盗梦空间</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 克里斯托弗·诺兰</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 莱昂纳多·迪卡普里奥 / 约瑟夫·高登-莱维特</p>
+                                    </div>
+                                </a>
+
+                                <!-- 黑暗骑士 -->
+                                <a href="https://movie.douban.com/subject/1851857/" target="_blank" rel="noopener noreferrer" class="movie-card bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                                    <div class="relative">
+                                        <img src="images/movies/darkknight.jpg" alt="黑暗骑士" class="w-full h-48 object-cover">
+                                        <div class="absolute top-0 right-0 bg-yellow-400 text-white px-2 py-1 rounded-bl-lg font-bold">
+                                            9.2
+                                        </div>
+                                    </div>
+                                    <div class="p-2">
+                                        <h3 class="text-sm font-semibold truncate">黑暗骑士</h3>
+                                        <p class="text-xs text-gray-600 truncate">导演: 克里斯托弗·诺兰</p>
+                                        <p class="text-xs text-gray-600 line-clamp-2">主演: 克里斯蒂安·贝尔 / 希斯·莱杰</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- 这可以继续添加其他部分，如作经历、喜欢的产等 -->
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4 text-center mt-12">
+        <p>&copy; 2023 Li N5. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const showMoreButtons = document.querySelectorAll('.show-more-btn');
+    
+    showMoreButtons.forEach((button, index) => {
+        button.addEventListener('click', function() {
+            const moreWorkExperience = document.getElementById(`moreWorkExperience${index + 1}`);
+            if (moreWorkExperience) {
+                moreWorkExperience.classList.remove('hidden');
+                this.style.display = 'none'; // 隐藏当前的"查看更多"按钮
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

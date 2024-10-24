@@ -1,0 +1,73 @@
+/* 重置默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* 添加新的样式 */
+.animate-bounce {
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(-25%);
+        animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+        transform: translateY(0);
+        animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+}
+
+/* 导航栏样式 */
+header {
+    background-color: #e5e5e5; /* 替换为你图片边缘的主要颜色 */
+    padding: 1rem;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+nav ul li a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* 主要内容样式 */
+main {
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    main {
+        flex-direction: column;
+    }
+
+    nav {
+        width: 100%;
+    }
+}
+
+header img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    width: auto;
+    display: block;
+}
+
